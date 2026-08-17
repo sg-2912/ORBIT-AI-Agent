@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "http://127.0.0.1:8000";
 
 function App() {
 
@@ -208,7 +211,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/agent/run",
+        `${API_BASE_URL}/agent/run`,
         {
           method: "POST",
 
@@ -271,7 +274,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/agent/confirm",
+        `${API_BASE_URL}/agent/confirm`,
         {
           method: "POST",
 
@@ -377,7 +380,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/agent/history"
+        `${API_BASE_URL}/agent/history`
       );
 
       const data =
@@ -416,7 +419,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/agent/memory"
+        `${API_BASE_URL}/agent/memory`
       );
 
       const data =
@@ -455,7 +458,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/agent/tools"
+        `${API_BASE_URL}/agent/tools`
       );
 
       const data =
