@@ -2618,3 +2618,65 @@ h1 {
     height: 34px;
   }
 }
+
+/* =========================================
+   ORBIT FOOTER
+========================================= */
+
+.orbit-footer {
+  width: 100%;
+  margin-top: 34px;
+  padding: 22px 20px 14px;
+
+  text-align: center;
+
+  border-top: 1px solid var(--border);
+
+  color: var(--soft-text);
+
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+}
+
+.orbit-footer p {
+  margin: 0;
+}
+
+.orbit-footer strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.footer-dot {
+  display: inline-block;
+  margin: 0 8px;
+
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Dark mode */
+
+[data-theme="dark"] .orbit-footer {
+  border-top-color: var(--border);
+}
+
+[data-theme="dark"] .orbit-footer strong,
+[data-theme="dark"] .footer-dot {
+  color: var(--accent);
+}
+
+/* Mobile */
+
+@media (max-width: 560px) {
+  .orbit-footer {
+    margin-top: 24px;
+    padding: 18px 12px 10px;
+    font-size: 12px;
+  }
+
+  .footer-dot {
+    margin: 0 5px;
+  }
+}

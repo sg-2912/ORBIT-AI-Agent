@@ -52,7 +52,6 @@ function App() {
   ========================================= */
 
   useEffect(() => {
-
     document.documentElement.setAttribute(
       "data-theme",
       theme
@@ -62,18 +61,15 @@ function App() {
       "orbit-theme",
       theme
     );
-
   }, [theme]);
 
 
   const toggleTheme = () => {
-
     setTheme(
       theme === "light"
         ? "dark"
         : "light"
     );
-
   };
 
 
@@ -82,7 +78,6 @@ function App() {
   ========================================= */
 
   const formatInput = (input) => {
-
     if (
       typeof input === "object"
       && input !== null
@@ -95,12 +90,10 @@ function App() {
     }
 
     return input ?? "";
-
   };
 
 
   const formatStatus = (status) => {
-
     if (!status) {
       return "Ready";
     }
@@ -110,12 +103,10 @@ function App() {
       .replace(/\b\w/g, (letter) =>
         letter.toUpperCase()
       );
-
   };
 
 
   const getStatusType = (status) => {
-
     if (!status) {
       return "neutral";
     }
@@ -148,12 +139,10 @@ function App() {
     }
 
     return "neutral";
-
   };
 
 
   const getStatusIcon = (status) => {
-
     const type = getStatusType(status);
 
     if (type === "success") {
@@ -169,12 +158,10 @@ function App() {
     }
 
     return "◉";
-
   };
 
 
   const getConfirmationTarget = () => {
-
     if (!pendingConfirmation?.tool_input) {
       return "";
     }
@@ -193,7 +180,6 @@ function App() {
       || input.destination_path
       || "Unknown target"
     );
-
   };
 
 
@@ -208,7 +194,6 @@ function App() {
   ========================================= */
 
   const runAgent = async () => {
-
     if (!task.trim()) {
       setError(
         "Please enter a task."
@@ -222,7 +207,6 @@ function App() {
     setPendingConfirmation(null);
 
     try {
-
       const response = await fetch(
         "http://127.0.0.1:8000/agent/run",
         {
@@ -243,18 +227,15 @@ function App() {
         await response.json();
 
       if (!response.ok) {
-
         throw new Error(
           data.detail
           || "Something went wrong."
         );
-
       }
 
       setResult(data);
 
       if (data.requires_confirmation) {
-
         setPendingConfirmation({
           task: data.task,
           selected_tool:
@@ -262,22 +243,17 @@ function App() {
           tool_input:
             data.tool_input
         });
-
       }
 
     } catch (err) {
-
       setError(
         err.message
         || "Unable to run ORBIT."
       );
 
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
 
@@ -286,7 +262,6 @@ function App() {
   ========================================= */
 
   const confirmAction = async () => {
-
     if (!pendingConfirmation) {
       return;
     }
@@ -295,7 +270,6 @@ function App() {
     setError("");
 
     try {
-
       const response = await fetch(
         "http://127.0.0.1:8000/agent/confirm",
         {
@@ -323,12 +297,10 @@ function App() {
         await response.json();
 
       if (!response.ok) {
-
         throw new Error(
           data.detail
           || "Could not confirm the action."
         );
-
       }
 
       setResult((previous) => ({
@@ -353,18 +325,14 @@ function App() {
       setPendingConfirmation(null);
 
     } catch (err) {
-
       setError(
         err.message
         || "Unable to confirm action."
       );
 
     } finally {
-
       setConfirmLoading(false);
-
     }
-
   };
 
 
@@ -373,11 +341,9 @@ function App() {
   ========================================= */
 
   const cancelConfirmation = () => {
-
     setPendingConfirmation(null);
 
     setResult((previous) => {
-
       if (!previous) {
         return previous;
       }
@@ -396,9 +362,7 @@ function App() {
         requires_confirmation:
           false
       };
-
     });
-
   };
 
 
@@ -407,13 +371,11 @@ function App() {
   ========================================= */
 
   const loadHistory = async () => {
-
     setActivePage("history");
     setHistoryLoading(true);
     setError("");
 
     try {
-
       const response = await fetch(
         "http://127.0.0.1:8000/agent/history"
       );
@@ -422,12 +384,10 @@ function App() {
         await response.json();
 
       if (!response.ok) {
-
         throw new Error(
           data.detail
           || "Could not load execution history."
         );
-
       }
 
       setHistory(
@@ -435,17 +395,13 @@ function App() {
       );
 
     } catch (err) {
-
       setError(
         err.message
       );
 
     } finally {
-
       setHistoryLoading(false);
-
     }
-
   };
 
 
@@ -454,13 +410,11 @@ function App() {
   ========================================= */
 
   const loadMemory = async () => {
-
     setActivePage("memory");
     setMemoryLoading(true);
     setError("");
 
     try {
-
       const response = await fetch(
         "http://127.0.0.1:8000/agent/memory"
       );
@@ -469,12 +423,10 @@ function App() {
         await response.json();
 
       if (!response.ok) {
-
         throw new Error(
           data.detail
           || "Could not load memory."
         );
-
       }
 
       setMemory(
@@ -482,17 +434,13 @@ function App() {
       );
 
     } catch (err) {
-
       setError(
         err.message
       );
 
     } finally {
-
       setMemoryLoading(false);
-
     }
-
   };
 
 
@@ -501,13 +449,11 @@ function App() {
   ========================================= */
 
   const loadTools = async () => {
-
     setActivePage("tools");
     setToolsLoading(true);
     setError("");
 
     try {
-
       const response = await fetch(
         "http://127.0.0.1:8000/agent/tools"
       );
@@ -516,12 +462,10 @@ function App() {
         await response.json();
 
       if (!response.ok) {
-
         throw new Error(
           data.detail
           || "Could not load tools."
         );
-
       }
 
       setTools(
@@ -529,17 +473,13 @@ function App() {
       );
 
     } catch (err) {
-
       setError(
         err.message
       );
 
     } finally {
-
       setToolsLoading(false);
-
     }
-
   };
 
 
@@ -548,19 +488,15 @@ function App() {
   ========================================= */
 
   const ThemeButton = () => (
-
     <button
       className="theme-toggle"
       onClick={toggleTheme}
       title="Toggle theme"
     >
-
       {theme === "light"
         ? "☾"
         : "☀"}
-
     </button>
-
   );
 
 
@@ -569,9 +505,7 @@ function App() {
   ========================================= */
 
   return (
-
     <div className="app">
-
 
       {/* =====================================
           SIDEBAR
@@ -695,7 +629,6 @@ function App() {
         ===================================== */}
 
         {activePage === "workspace" && (
-
           <>
 
             <header className="top-header">
@@ -707,15 +640,11 @@ function App() {
                 </p>
 
                 <h1>
-
                   What should{" "}
-
                   <span className="orbit-heading">
                     ORBIT
                   </span>{" "}
-
                   do?
-
                 </h1>
 
                 <p className="subtitle">
@@ -750,11 +679,9 @@ function App() {
 
 
               {error && (
-
                 <p className="error-message">
                   {error}
                 </p>
-
               )}
 
 
@@ -786,11 +713,9 @@ function App() {
                   onClick={runAgent}
                   disabled={loading}
                 >
-
                   {loading
                     ? "Running..."
                     : "Run Agent →"}
-
                 </button>
 
               </div>
@@ -801,7 +726,6 @@ function App() {
             {/* ORBIT RESPONSE */}
 
             {result?.message && (
-
               <section
                 className={
                   `agent-response-card ${
@@ -813,11 +737,9 @@ function App() {
               >
 
                 <div className="agent-response-icon">
-
                   {getStatusIcon(
                     result.status
                   )}
-
                 </div>
 
 
@@ -834,7 +756,6 @@ function App() {
                 </div>
 
               </section>
-
             )}
 
 
@@ -871,13 +792,11 @@ function App() {
                       }`
                     }
                   >
-
                     {result
                       ? formatStatus(
                           result.status
                         )
                       : "Waiting"}
-
                   </span>
 
                 </div>
@@ -962,9 +881,7 @@ function App() {
                       }`
                     }
                   >
-
                     <span>
-
                       {loading
                         ? "…"
                         : result
@@ -972,16 +889,13 @@ function App() {
                               result.status
                             )
                           : "◉"}
-
                     </span>
-
                   </div>
 
 
                   <div>
 
                     <h3>
-
                       {loading
                         ? "Running"
                         : result
@@ -989,12 +903,10 @@ function App() {
                               result.status
                             )
                           : "Ready"}
-
                     </h3>
 
 
                     <p>
-
                       {loading
                         ? "Executing your task..."
 
@@ -1015,7 +927,6 @@ function App() {
                                 || "Task execution finished"
 
                               : "Waiting for a task"}
-
                     </p>
 
                   </div>
@@ -1047,14 +958,12 @@ function App() {
 
 
                 <span className="action-count">
-
                   {result
                     ? `${
                         result.history?.length
                         || 0
                       } actions`
                     : "0 actions"}
-
                 </span>
 
               </div>
@@ -1098,11 +1007,9 @@ function App() {
                             <
                             result.history.length - 1
                             && (
-
                             <div
                               className="timeline-line"
                             />
-
                           )}
 
                         </div>
@@ -1154,14 +1061,12 @@ function App() {
                               </span>
 
                               <p>
-
                                 {item.result?.success
                                   ? "✓ Success"
                                   : `✕ ${
                                       item.result?.error
                                       || "Failed"
                                     }`}
-
                               </p>
 
                             </div>
@@ -1182,7 +1087,6 @@ function App() {
             </section>
 
           </>
-
         )}
 
 
@@ -1203,15 +1107,11 @@ function App() {
                 </p>
 
                 <h1>
-
                   Previous{" "}
-
                   <span className="orbit-heading">
                     ORBIT
                   </span>{" "}
-
                   runs
-
                 </h1>
 
                 <p className="subtitle">
@@ -1350,15 +1250,12 @@ function App() {
 
 
                             <p>
-
                               <strong>
                                 Input:
                               </strong>{" "}
-
                               {formatInput(
                                 action.input
                               )}
-
                             </p>
 
 
@@ -1369,14 +1266,12 @@ function App() {
                                   : "history-failed"
                               }
                             >
-
                               {action.result?.success
                                 ? "✓ Success"
                                 : `✕ ${
                                     action.result?.error
                                     || "Failed"
                                   }`}
-
                             </p>
 
                           </div>
@@ -1415,15 +1310,11 @@ function App() {
                 </p>
 
                 <h1>
-
                   What{" "}
-
                   <span className="orbit-heading">
                     ORBIT
                   </span>{" "}
-
                   remembers
-
                 </h1>
 
                 <p className="subtitle">
@@ -1500,11 +1391,9 @@ function App() {
                             }`
                           }
                         >
-
                           {formatStatus(
                             item.status
                           )}
-
                         </span>
 
                       </div>
@@ -1539,13 +1428,10 @@ function App() {
                 </p>
 
                 <h1>
-
                   ORBIT's{" "}
-
                   <span className="orbit-heading">
                     capabilities
                   </span>
-
                 </h1>
 
                 <p className="subtitle">
@@ -1642,6 +1528,20 @@ function App() {
 
         )}
 
+
+        {/* =====================================
+            FOOTER
+        ===================================== */}
+
+        <footer className="orbit-footer">
+          <p>
+            Designed &amp; Built by{" "}
+            <strong>Sakshi Galgale</strong>
+            <span className="footer-dot">•</span>
+            ORBIT AI Agent
+          </p>
+        </footer>
+
       </main>
 
 
@@ -1732,11 +1632,9 @@ function App() {
                   confirmLoading
                 }
               >
-
                 {confirmLoading
                   ? "Processing..."
                   : "Confirm Action"}
-
               </button>
 
             </div>
@@ -1748,9 +1646,7 @@ function App() {
       )}
 
     </div>
-
   );
-
 }
 
 
